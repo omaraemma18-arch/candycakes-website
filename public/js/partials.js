@@ -73,7 +73,7 @@ function renderFooter() {
         <div class="footer-grid">
           <div>
             <div class="logo"><img src="${LOGO_IMAGE}" alt="${BRAND_NAME}"></div>
-            <p>A bakery in Boston creating custom cakes, pastries, and celebration treats to order.</p>
+            <p>A bakery in Lukuli,Boston creating custom cakes, pastries, and celebration treats to order.</p>
             ${socialHtml ? `<div class="social-row">${socialHtml}</div>` : ''}
           </div>
           <div>
@@ -90,7 +90,7 @@ function renderFooter() {
             <ul>
               <li><a href="tel:256709992587">256 709 992 587</a></li>
               <li><a href="mailto:akellonoeline05@gmail.com">akellonoeline05@gmail.com</a></li>
-              <li>Boston</li>
+              <li>Lukuli,Boston</li>
               <li>Tue–Sat, 9am–6pm</li>
             </ul>
           </div>
@@ -100,7 +100,7 @@ function renderFooter() {
           <span class="footer-links">
             <a href="/terms">Terms &amp; Conditions</a>
             <span aria-hidden="true">·</span>
-            <span>Baked in Boston</span>
+            <span>Baked in Lukuli,Boston</span>
           </span>
         </div>
       </div>

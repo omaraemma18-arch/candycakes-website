@@ -21,6 +21,7 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Add a short description.'],
       trim: true,
+      minlength: [120, 'Write 2–3 sentences covering ingredients, flavour, and texture.'],
       maxlength: [1200, 'Keep the description under 1200 characters.'],
     },
     category: {

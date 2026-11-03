@@ -16,7 +16,7 @@
         <div class="cake-body">
           <div class="cake-cat">${escapeHtml(p.category)}</div>
           <h3>${escapeHtml(p.name)}</h3>
-          <p>${escapeHtml(p.description.slice(0, 130))}${p.description.length > 130 ? '…' : ''}</p>
+          <p>${escapeHtml(p.description)}</p>
           <div class="cake-foot">
             <div class="price">${formatUGX(p.basePrice)}<small>from</small></div>
             <a class="btn btn-primary btn-sm" href="/product?cake=${encodeURIComponent(p.slug)}">Customise</a>

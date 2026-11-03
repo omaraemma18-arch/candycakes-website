@@ -1,5 +1,7 @@
 process.env.JWT_SECRET = 'x'.repeat(40);
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
+const path = require('path');
 const results = [];
 const check = (l, c, d='') => results.push(`${c?'PASS':'FAIL'}  ${l}${d?' — '+d:''}`);
 
@@ -18,8 +20,11 @@ check('Product rejects negative price', !!e.errors.basePrice);
 e = new Product({ name:'X', description:'d', basePrice:1000, imageUrl:'u', category:'bogus' }).validateSync();
 check('Product rejects invalid category', !!e.errors.category);
 
-e = new Product({ name:'X', description:'d', basePrice:1000, imageUrl:'u', category:'wedding' }).validateSync();
+e = new Product({ name:'X', description:'A tender vanilla sponge made with real vanilla and layered with smooth buttercream. Its gentle sweetness and soft crumb make it a lovely centrepiece for birthdays and family gatherings.', basePrice:1000, imageUrl:'u', category:'wedding' }).validateSync();
 check('Product accepts a valid doc', !e);
+
+e = new Product({ name:'X', description:'A short description.', basePrice:1000, imageUrl:'u' }).validateSync();
+check('Product requires a detailed description', !!e.errors.description);
 
 e = new Order({}).validateSync();
 check('Order requires customer + fulfilment + items',
@@ -110,6 +115,30 @@ check('orders endpoint exists', ordR.includes('POST /'));
 const adminRouter = require('./routes/adminRoutes');
 const hasGuard = adminRouter.stack.some(l => !l.route && l.handle && l.handle.name === 'requireAuth');
 check('every admin route sits behind requireAuth', hasGuard);
+
+const serverSource = fs.readFileSync(path.join(__dirname, 'server.js'), 'utf8');
+check('About and FAQ have public page routes',
+  serverSource.includes("app.get('/about', page('about.html'))") &&
+  serverSource.includes("app.get('/faq', page('faq.html'))"));
+
+const publicContentPages = ['index.html', 'menu.html', 'product.html', 'terms.html', 'about.html', 'faq.html'];
+const adsenseScript = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
+check('AdSense is in the head of content pages', publicContentPages.every((file) => {
+  const html = fs.readFileSync(path.join(__dirname, 'public', file), 'utf8');
+  const scriptPosition = html.indexOf(adsenseScript);
+  return scriptPosition !== -1 && scriptPosition < html.indexOf('</head>');
+}));
+
+const nonContentPages = [
+  '404.html', 'cart.html', 'checkout.html', 'confirmation.html',
+  'admin/login.html', 'admin/dashboard.html', 'admin/orders.html', 'admin/products.html',
+];
+check('AdSense is absent from transaction, error, and admin pages', nonContentPages.every((file) =>
+  !fs.readFileSync(path.join(__dirname, 'public', file), 'utf8').includes(adsenseScript)));
+
+check('Product cards render full descriptions',
+  !fs.readFileSync(path.join(__dirname, 'public/js/home.js'), 'utf8').includes('p.description.slice(0, 130)') &&
+  !fs.readFileSync(path.join(__dirname, 'public/js/menu.js'), 'utf8').includes('p.description.slice(0, 130)'));
 
 /* ---------- 4. Upload constraints ---------- */
 const { upload } = require('./middleware/upload');

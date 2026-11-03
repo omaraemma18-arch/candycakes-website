@@ -83,6 +83,8 @@ function renderFooter() {
               <li><a href="/menu?category=birthday">Birthday cakes</a></li>
               <li><a href="/menu?category=wedding">Wedding cakes</a></li>
               <li><a href="/menu?category=cupcakes">Cupcakes</a></li>
+              <li><a href="/about">About us</a></li>
+              <li><a href="/faq">Frequently asked questions</a></li>
             </ul>
           </div>
           <div>

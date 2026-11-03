@@ -25,7 +25,7 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        scriptSrc: ["'self'"],
+        scriptSrc: ["'self'", 'https://pagead2.googlesyndication.com'],
         styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
         fontSrc: ["'self'", 'https://fonts.gstatic.com'],
         // Product photos are served from Cloudinary.
@@ -70,6 +70,8 @@ const page = (file) => (req, res) => res.sendFile(path.join(__dirname, 'public',
 app.get('/', page('index.html'));
 app.get('/menu', page('menu.html'));
 app.get('/product', page('product.html'));
+app.get('/about', page('about.html'));
+app.get('/faq', page('faq.html'));
 app.get('/cart', page('cart.html'));
 app.get('/checkout', page('checkout.html'));
 app.get('/confirmation', page('confirmation.html'));

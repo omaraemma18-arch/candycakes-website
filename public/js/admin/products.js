@@ -53,8 +53,8 @@
 
         <div class="field" data-field="description">
           <label for="pDescription">Description</label>
-          <textarea class="control" id="pDescription" maxlength="1200" placeholder="What it is, what's in it, who it suits."></textarea>
-          <div class="field-error">Add a short description.</div>
+          <textarea class="control" id="pDescription" minlength="120" maxlength="1200" placeholder="Write 2–3 sentences about ingredients, flavour, and texture."></textarea>
+          <div class="field-error">Write 2–3 descriptive sentences (at least 120 characters).</div>
         </div>
 
         <div class="field-row">
@@ -237,7 +237,7 @@
       if (bad) ok = false;
     };
     invalid('name', name.length < 2);
-    invalid('description', description.length < 5);
+    invalid('description', description.length < 120);
     invalid('basePrice', basePrice === '' || Number(basePrice) < 0);
 
     if (!editingId && !selectedFiles.length) {
